@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nuestro Aniversario: El Mix de Amor</title>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg1: #ffeef6;
+            --bg2: #f8e9ff;
+            --accent: #d81b60;
+            --accent-dark: #880e4f;
+            --card: rgba(255,255,255,0.95);
+            --muted: #6a1b9a;
+            --button: #ff6e40;
+            --button-hover: #ff3d00;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg,var(--bg1), var(--bg2));
+            color: var(--accent-dark);
+        }
+
+        /* HEADER / NAV */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            backdrop-filter: blur(6px);
+            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            border-bottom: 1px solid rgba(136,14,79,0.04);
+        }
+        .topbar {
+            max-width: 1100px;
+            margin: 8px auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 18px;
+            gap: 12px;
+        }
+        .brand {
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+        .brand h1 {
+            margin: 0;
+            font-family: 'Great Vibes', cursive;
+            color: var(--accent);
+            font-size: 1.6rem;
+            line-height:1;
+        }
+        nav {
+            display:flex;
+            gap:10px;
+            align-items:center;
+        }
+        nav a {
+            text-decoration: none;
+            color: #5e2a71;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight:600;
+            transition: background .18s, color .18s, transform .12s;
+        }
+        nav a:hover, nav a:focus {
+            background: rgba(216,27,96,0.08);
+            color: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        /* LAYOUT: grid with varied positions */
+        main {
+            max-width: 1100px;
+            margin: 28px auto;
+            padding: 0 16px 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        @media (min-width: 860px) {
+            main {
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas:
+                    "intro intro"
+                    "tiempo plan"
+                    "secreto secreto";
+            }
+            .intro { grid-area: intro; }
+            .tiempo { grid-area: tiempo; }
+            .plan { grid-area: plan; }
+            .secreto-section { grid-area: secreto; }
+        }
+
+        .seccion {
+            background: var(--card);
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(97,26,116,0.06);
+        }
+
+        /* specific sizing/placement so "no estén todas en el mismo sitio" */
+        .intro { display:flex; gap:16px; align-items:center; justify-content:space-between; }
+        .intro .texto { flex:1; }
+        .intro .imagen {
+            width:140px;
+            height:110px;
+            border-radius:10px;
+            background: linear-gradient(135deg,#ffd8ea,#f8e9ff);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:2.2rem;
+            color: var(--accent-dark);
+            box-shadow: 0 8px 24px rgba(216,27,96,0.06);
+        }
+
+        h1 { 
+            color: var(--accent); 
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2em;
+            margin:0;
+        } 
+        h2 { margin:0 0 8px 0; color:var(--accent); font-size:1.1rem; }
+
+        /* contador en bloque */
+        #contador {
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-top:10px;
+        }
+        .bloque {
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92));
+            border-radius:8px;
+            padding:10px 12px;
+            min-width:90px;
+            text-align:center;
+            box-shadow: 0 6px 18px rgba(121, 33, 120, 0.04);
+        }
+        .bloque .num { font-weight:700; font-size:1.1rem; color:var(--accent-dark) }
+        .bloque .lbl { font-size:0.75rem; color:#6a1b9a; margin-top:6px }
+
+        #mensaje-cita { margin-top:8px; min-height:38px; color:#4a148c; font-weight:600 }
+
+        button {
+            background-color: var(--button);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.12s;
+            font-size: 1em;
+        }
+        button:hover { 
+            background-color: var(--button-hover);
+            transform: translateY(-3px);
+        }
+
+        /* nuevo: opciones para planes */
+        .filtros { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; justify-content:flex-start; }
+        .filtros button { padding:6px 10px; border-radius:999px; font-size:0.9rem; background:transparent; border:1px solid rgba(94,42,113,0.06); color:#5e2a71; }
+        .opciones-grid { 
+            /* ocultar las opciones visualmente; la lógica JS sigue disponible */
+            display: none;
+            gap:10px; margin-top:12px;
+        }
+        .opcion { text-align:left; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.94)); padding:10px 12px; border-radius:10px; cursor:pointer; border:1px solid rgba(140,54,150,0.06); }
+        .opcion:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(97,26,116,0.06); }
+        .opcion .meta { font-size:0.78rem; color:#7b1fa2; margin-bottom:6px; font-weight:600 }
+        .opcion .texto { color:#4a148c; font-size:0.95rem }
+        @media (max-width:720px){ .opciones-grid { grid-template-columns: 1fr } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="topbar">
+            <div class="brand">
+                <div class="imagen-mini" aria-hidden="true" style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#ffd8ea,#f8e9ff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);font-weight:700;">♥</div>
+                <h1 style="font-size:1.1rem">Nuestro Aniversario</h1>
+            </div>
+
+            <nav aria-label="Navegación principal">
+                <a href="#intro">Inicio</a>
+                <a href="#tiempo">Tiempo</a>
+                <a href="#plan">Plan</a>
+                <a href="#secreto-section">Secreto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="intro" class="seccion intro">
+            <div class="texto">
+                <h2>¡Feliz 2º Aniversario, Mi Amor!</h2>
+                <p>Este es nuestro regalo digital: un poco de todo, como tú y yo. Gracias por cada momento compartido.</p>
+            </div>
+            <div class="imagen" aria-hidden="true">💖</div>
+        </section>
+
+        <section id="tiempo" class="seccion tiempo">
+            <h2>Tiempo Juntos 🥂</h2>
+            <p>Desde el día que dijimos "sí", han pasado...</p>
+            <div id="contador" aria-live="polite">
+                <div class="bloque"><div class="num" id="años">--</div><div class="lbl">Años</div></div>
+                <div class="bloque"><div class="num" id="dias">--</div><div class="lbl">Días</div></div>
+                <div class="bloque"><div class="num" id="horas">--</div><div class="lbl">Horas</div></div>
+                <div class="bloque"><div class="num" id="minutos">--</div><div class="lbl">Minutos</div></div>
+                <div class="bloque"><div class="num" id="segundos">--</div><div class="lbl">Segundos</div></div>
+            </div>
+        </section>
+
+        <section id="plan" class="seccion plan">
+            <h2>Nuestro Próximo Plan ✨</h2>
+            <p>Haz clic para que el destino elija nuestra próxima aventura:</p>
+
+            <div class="filtros" aria-hidden="true">
+                <button data-cat="inmediata" class="filtro-activo">Interacción inmediata</button>
+                <button data-cat="proxima">Próxima vez</button>
+                <button data-cat="tonterias">Tonterías</button>
+                <button data-cat="todas">Todas</button>
+            </div>
+
+            <div id="mensaje-cita" style="margin-top:8px; min-height:48px;">Esperando tu elección...</div>
+
+            <div class="opciones-grid" id="opciones-container" aria-live="polite" style="margin-top:10px;">
+                <!-- las opciones se renderizan aquí -->
+            </div>
+
+            <div style="margin-top:12px;">
+                <button id="boton-aleatorio">Elegir aleatorio</button>
+            </div>
+        </section>
+
+        <section id="secreto-section" class="seccion secreto-section">
+            <h2>Mensaje Secreto (Para el Final)</h2>
+            <p>Aquí hay una última sorpresa escondida:</p>
+            <div style="margin-top:10px;">
+                <button onclick="revelarMensaje()">Revelar Mensaje</button>
+            </div>
+            <p id="secreto" style="display: none; color: #880e4f; font-style: italic; margin-top: 15px;">
+                ¡Te amo más que a todos los bugs del mundo! Eres el código mejor escrito que he conocido. ❤️
+            </p>
+        </section>
+    </main>
+
+    <script>
+        // **********************************************
+        // 1. LÓGICA DEL CONTADOR
+        // **********************************************
+        // IMPORTANTE: ¡CAMBIA ESTA FECHA POR LA SUYA! Formato AAAA-MM-DD
+        const fechaInicio = new Date('2023-11-11T23:42:00'); 
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = ahora - fechaInicio;
+
+            // Cálculos
+            const segundos = Math.floor(diferencia / 1000);
+            const minutos = Math.floor(segundos / 60);
+            const horas = Math.floor(minutos / 60);
+            const dias = Math.floor(horas / 24);
+            const años = Math.floor(dias / 365.25); // Con 0.25 para bisiestos
+
+            const diasRestantes = Math.floor(dias - años * 365.25);
+            const horasRestantes = horas % 24;
+            const minutosRestantes = minutos % 60;
+            const segundosRestantes = segundos % 60;
+
+            // actualizar bloques
+            document.getElementById('años').textContent = años;
+            document.getElementById('dias').textContent = diasRestantes;
+            document.getElementById('horas').textContent = String(horasRestantes).padStart(2,'0');
+            document.getElementById('minutos').textContent = String(minutosRestantes).padStart(2,'0');
+            document.getElementById('segundos').textContent = String(segundosRestantes).padStart(2,'0');
+        }
+
+        // Ejecutar el contador cada segundo
+        actualizarContador();
+        setInterval(actualizarContador, 1000);
+
+
+        // **********************************************
+        // 2. LÓGICA DEL SELECTOR DE CITAS Y OPCIONES
+        // **********************************************
+        const opciones_inmediata = [
+            "Misión: Te toca elegir una canción en YouTube, y la escuchamos los dos al mismo tiempo, sin decir nada.",
+            "Vale por: Una llamada sorpresa de 5 minutos, ahora mismo, para escuchar solo tu voz suave.",
+            "Plan: Manda un pin en Google Maps de dónde te gustaría que fuera nuestra próxima cita real.",
+            "Reto: Búscame la foto más graciosa que tengas de mí y envíamela sin explicación. Yo haré lo mismo.",
+            "Cita: 10 minutos de contar chistes malos por videollamada. El primero que ría, pierde.",
+            "Promesa: Te envío ahora mismo un emoji que describe mi ánimo cuando pienso en ti.",
+            "Misión: Escribe 3 cosas que te hagan feliz en este momento. Mándamelas en 5 minutos.",
+            "Vale por: Te escribo una mini-carta de 3 frases contándote lo que amo de tu voz.",
+            "Plan: Vamos a ver el tráiler de la película que más ilusión te haga ver este año.",
+            "Cita: 10 minutos para quejarnos de todo lo que nos estresa. Luego, lo olvidamos.",
+            "Misión: ¿Qué harás en cuanto me veas? Envíame un mensaje con la respuesta.",
+            "Vale por: Te llamo y te leo un fragmento de mi libro/poema favorito.",
+            "Plan: Te envío un audio de 1 minuto contándote mi mejor recuerdo de la semana.",
+            "Reto: Dime qué parte de ti admiro más. Piénsalo y escríbelo en una sola frase.",
+            "Promesa: Te envío un GIF que me recuerde a ti en este mismo instante."
+        ];
+
+        const opciones_proxima = [
+            "Vale por: Un masaje de cuello y hombros de 10 minutos (sin quejas, por favor).",
+            "Promesa: La próxima vez que nos veamos, te haré tu plato favorito (aunque sea solo tostadas).",
+            "Misión: Abrazos ilimitados. El próximo abrazo debe durar, al menos, 30 segundos.",
+            "Vale por: Te permito robar mi sudadera/camiseta favorita (y te la llevas a casa).",
+            "Cita: La próxima vez, te elijo un postre súper azucarado y lo devoramos juntos.",
+            "Plan: Noche de cine con todos tus snacks favoritos (yo voy al súper).",
+            "Vale por: Mañana te traigo las flores que no pude comprar hoy. Elijo tus favoritas.",
+            "Promesa: Te daré la mano todo el tiempo que caminemos juntos.",
+            "Misión: Construir un fuerte de cojines para ver una peli (aunque estemos cinco minutos dentro).",
+            "Cita: Desayuno preparado por mí (a la hora que quieras) en mi casa o la tuya.",
+            "Plan: 10 minutos de caricias y mimos en el sofá sin interrupciones ni móviles.",
+            "Vale por: Una selfie ridícula juntos en el espejo (con caras graciosas).",
+            "Promesa: Te enseñaré la receta más sencilla que sé hacer para que cocinemos juntos.",
+            "Misión: Vamos a hacer zapping 15 minutos sin quejarnos de lo que haya en la tele.",
+            "Vale por: Te ayudo con cualquier tarea o pendiente que tengas, sin preguntar.",
+            "Plan: Ir a una heladería y probar el sabor más raro que encontremos.",
+            "Cita: Un paseo nocturno, solo para hablar de todo y de nada, de la mano.",
+            "Promesa: Te dejo elegir toda la música que vamos a escuchar mientras estamos juntos.",
+            "Misión: Vamos a ir a ese sitio que te gusta tanto y que a mí no tanto... y me callo. 😉",
+            "Vale por: Un vale de 24 horas sin criticar (ni a ti, ni a mí, ni a nadie)."
+        ];
+
+        const opciones_tonterias = [
+            "Recordatorio: Eres mi persona favorita. Siempre.",
+            "¡Alerta! Tu novio te ama más de lo que crees. Mucho más.",
+            "Plan: Hoy tienes que mirar al cielo y pensar en mí. Lo mismo haré yo.",
+            "Vale por: Un minuto entero de besos la próxima vez que te vea.",
+            "Mensaje: Eres la mejor parte de mi día, todos los días.",
+            "Misión: ¡Tienes que sonreír justo ahora!",
+            "Plan: Te voy a contar un secreto que no le he dicho a nadie. (En persona, claro).",
+            "Recordatorio: Tu sonrisa es mi cosa favorita en el mundo entero.",
+            "Vale por: Un deseo concedido (que no sea pedir dinero ni otro deseo).",
+            "Mensaje: Te amo por tu [inserta una cualidad específica, ej: honestidad].",
+            "Plan: Vamos a hacer una 'hora tonta', sin reglas ni vergüenza, solo risas.",
+            "Promesa: Te amaré sin fallas, incluso cuando no estés de acuerdo conmigo. (Casi siempre).",
+            "Recordatorio: Eres un código bien escrito, sin bugs, y muy hermoso.",
+            "Misión: Dibuja un corazón en el primer papel que encuentres.",
+            "Mensaje: Gracias por ser mi hogar, mi aventura y mi paz. ¡Feliz Aniversario!"
+        ];
+
+        const todasOpciones = [...opciones_inmediata, ...opciones_proxima, ...opciones_tonterias];
+
+        const contenedorOpciones = document.getElementById('opciones-container');
+        const mensajeCita = document.getElementById('mensaje-cita');
+
+        function crearOpcion(text, categoria){
+            const div = document.createElement('div');
+            div.className = 'opcion';
+            div.tabIndex = 0;
+            div.dataset.cat = categoria;
+            div.innerHTML = `<div class="meta">${categoria === 'inmediata' ? 'Inmediata' : categoria === 'proxima' ? 'Próxima vez' : 'Tontería'}</div><div class="texto">${text}</div>`;
+            div.addEventListener('click', ()=> { mensajeCita.textContent = text; window.scrollTo({top: document.getElementById('plan').offsetTop - 80, behavior:'smooth'}); });
+            div.addEventListener('keypress', (e)=> { if(e.key === 'Enter') div.click(); });
+            return div;
+        }
+
+        function renderOpciones(categoria){
+            contenedorOpciones.innerHTML = '';
+            let lista = [];
+            if(categoria === 'inmediata') lista = opciones_inmediata;
+            else if(categoria === 'proxima') lista = opciones_proxima;
+            else if(categoria === 'tonterias') lista = opciones_tonterias;
+            else lista = todasOpciones;
+            lista.forEach(item => contenedorOpciones.appendChild(crearOpcion(item, categoria === 'todas' ? 'todas' : (categoria || detectCategoria(item)))));
+        }
+
+        function detectCategoria(text){
+            if(opciones_inmediata.includes(text)) return 'inmediata';
+            if(opciones_proxima.includes(text)) return 'proxima';
+            return 'tonterias';
+        }
+
+        // inicializar con categorías
+        renderOpciones('inmediata');
+
+        // filtros
+        document.querySelectorAll('.filtros button').forEach(btn=>{
+            btn.addEventListener('click', ()=>{
+                document.querySelectorAll('.filtros button').forEach(b=>b.classList.remove('filtro-activo'));
+                btn.classList.add('filtro-activo');
+                const cat = btn.dataset.cat;
+                renderOpciones(cat === 'todas' ? 'todas' : cat);
+            });
+        });
+
+        // helper: obtener categoría activa y lista correspondiente
+        function getActiveCategory(){
+            const btn = document.querySelector('.filtros button.filtro-activo');
+            return btn ? btn.dataset.cat : 'todas';
+        }
+
+        function opcionesPorCategoria(cat){
+            if(cat === 'inmediata') return opciones_inmediata;
+            if(cat === 'proxima') return opciones_proxima;
+            if(cat === 'tonterias') return opciones_tonterias;
+            return todasOpciones;
+        }
+
+        // botón aleatorio (respeta la categoría seleccionada)
+        document.getElementById('boton-aleatorio').addEventListener('click', ()=>{
+            const cat = getActiveCategory();
+            const lista = opcionesPorCategoria(cat);
+            if(!lista.length) return;
+            const idx = Math.floor(Math.random() * lista.length);
+            mensajeCita.textContent = lista[idx];
+        });
+
+        // conservar función previa si se invoca desde elsewhere (ahora respeta categoría activa)
+        function mostrarCita() {
+            const cat = getActiveCategory();
+            const lista = opcionesPorCategoria(cat);
+            const idx = Math.floor(Math.random() * lista.length);
+            document.getElementById('mensaje-cita').textContent = lista[idx];
+        }
+
+
+        // **********************************************
+        // 3. LÓGICA DEL MENSAJE SECRETO
+        // **********************************************
+        function revelarMensaje() {
+            const mensaje = document.getElementById('secreto');
+            if (mensaje.style.display === 'none') {
+                mensaje.style.display = 'block';
+            } else {
+                mensaje.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
