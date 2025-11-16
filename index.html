@@ -125,12 +125,15 @@
             width:140px;
             height:110px;
             border-radius:10px;
-            background: linear-gradient(135deg,#ffd8ea,#f8e9ff);
+            /* ahora usa la foto de fondo.jpg */
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(0,0,0,0.08)), url('fondo.jpg');
+            background-size: cover;
+            background-position: center;
             display:flex;
             align-items:center;
             justify-content:center;
             font-size:2.2rem;
-            color: var(--accent-dark);
+            color: transparent; /* no mostrar emoji si queda contenido */
             box-shadow: 0 8px 24px rgba(216,27,96,0.06);
         }
 
@@ -146,7 +149,7 @@
             margin-bottom: 5px;
             color: var(--accent-dark);
             font-size: 1.4rem;
-            font-family: 'Great Vibes', cursive;
+            font-family: 'Poppins', system-ui, sans-serif;
             border-bottom: 2px solid rgba(216, 27, 96, 0.1);
             padding-bottom: 5px;
         }
@@ -224,10 +227,6 @@
         .album-aniversario {
              padding-top: 15px; /* Para asegurar el espacio al hacer scroll */
         }
-
-        .galeria h3{
-            font-family: 'Poppins','sans-serif';
-        }
     </style>
 </head>
 <body>
@@ -256,11 +255,11 @@
                 <h2>¡Feliz 2º Aniversario, Mi Amor!</h2>
                 <p>Este es nuestro regalo digital: un poco de todo, como tú y yo. Gracias por cada momento compartido.</p>
             </div>
-            <div class="imagen" aria-hidden="true"></div>
+            <div class="imagen" aria-hidden="true" role="img" aria-label="Foto de aniversario"></div>
         </section>
 
         <section id="tiempo" class="seccion tiempo">
-            <h2>Tiempo Juntos </h2>
+            <h2>Tiempo Juntos 🥂</h2>
             <p>Desde el día que dijimos "sí", han pasado...</p>
             <div id="contador" aria-live="polite">
                 <div class="bloque"><div class="num" id="años">--</div><div class="lbl">Años</div></div>
@@ -272,7 +271,7 @@
         </section>
 
         <section id="plan" class="seccion plan">
-            <h2>Nuestro Próximo Plan </h2>
+            <h2>Nuestro Próximo Plan ✨</h2>
             <p>Haz clic para que el destino elija nuestra próxima aventura:</p>
 
             <div class="filtros" aria-hidden="true">
@@ -311,13 +310,19 @@
                 <h3>Primer Aniversario: Nuestro Primer Viaje</h3>
                 <p>Recuerdos de nuestro primer año. El inicio de todo lo bueno.</p>
                 <div class="galeria">
+                    <img src="fotos/1/f1.jpg" alt="Foto Primer Aniversario 1">
+                    <img src="fotos/1/f2.jpg" alt="Foto Primer Aniversario 2">
+                    <img src="fotos/1/f3.jpg" alt="Foto Primer Aniversario 3">
                 </div>
             </div>
 
             <div class="album-aniversario" id="aniversario2" style="margin-top: 30px;">
-                <h3> Segundo Aniversario: [Lugar de Celebración]</h3>
+                <h3>Segundo Aniversario: [Lugar de Celebración]</h3>
                 <p>¡Dos años y contando! Sigamos creando historias increíbles.</p>
                 <div class="galeria">
+                    <img src="fotos/2/g1.jpg" alt="Foto Segundo Aniversario 1">
+                    <img src="fotos/2/g2.jpg" alt="Foto Segundo Aniversario 2">
+                    <img src="fotos/2/g3.jpg" alt="Foto Segundo Aniversario 3">
                 </div>
             </div>
         </section>
@@ -391,7 +396,7 @@
             "Mensaje: Eres la mejor parte de mi día, todos los días.",
             "Misión: ¡Tienes que sonreír justo ahora!",
             "Recordatorio: Tu sonrisa es mi cosa favorita en el mundo entero.",
-            "Mensaje: Te amo por tu manera de amarme.",
+            "Mensaje: Te amo por tu [inserta una cualidad específica, ej: honestidad].",
             "Recordatorio: Eres un código bien escrito, sin bugs, y muy hermoso.",
             "Misión: Dibuja un corazón en el primer papel que encuentres.",
             "Mensaje: Gracias por ser mi hogar, mi aventura y mi paz. ¡Feliz Aniversario!"
@@ -499,6 +504,4 @@
     </script>
 
 </body>
-
 </html>
-
